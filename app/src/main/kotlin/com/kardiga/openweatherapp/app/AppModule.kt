@@ -4,7 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.google.gson.GsonBuilder
 import com.kardiga.openweatherapp.BuildConfig
-import com.kardiga.openweatherapp.data.OpenWeatherApi
+import com.kardiga.openweatherapp.data.api.OpenWeatherApi
+import com.kardiga.openweatherapp.data.repository.WeatherForecastRepository
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -49,5 +50,9 @@ class AppModule constructor(private val app: OpenWeatherApp) {
             .build()
         return retrofit.create<OpenWeatherApi>(OpenWeatherApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideWeatherForecastRepository(api: OpenWeatherApi) = WeatherForecastRepository(api)
 
 }
